@@ -43,8 +43,39 @@ class LogiqueJeu:
             
 
     def retournement_pions(self, lig, col):
-        # Implémentez la logique pour retourner les pions
-        return 
+        # Liste pour stocker les pions a retourner
+        pions_a_retourner = []
+    
+        # Nord, Sud, Est, Ouest, Nord-Est, Nord-Ouest, Sud-Est, Sud-Ouest
+        directions = [
+            (-1, -1), (-1, 0), (-1, 1),
+            (0, -1),           (0, 1),
+            (1, -1), (1, 0), (1, 1)
+        ]
+    
+        for dx, dy in directions:
+            x, y = lig + dx, col + dy
+            pions_adverses = []
+    
+            # Parcourir la direction jusqu'à trouver un pion de la même couleur
+            while 0 <= x < 8 and 0 <= y < 8:
+                couleur = self.grille.couleur_pion(x, y)
+    
+                if couleur == self.joueur_courant:
+                    pions_a_retourner.extend(pions_adverses)
+                    break
+                elif couleur == ' ':
+                    pions_adverses = []
+                    break
+                else:
+                    pions_adverses.append((x, y))
+    
+                x += dx
+                y += dy
+    
+        # Retourner les pions capturés
+        for pion in pions_a_retourner:
+            self.grille.retourner_pion(*pion)
     
     def coups_possibles(self):
         # Initialisation d'une liste vide de coups possibles
@@ -66,7 +97,7 @@ class LogiqueJeu:
             # Changer de joueur 
             self.changer_joueur()
             # Verifier si l'autre joueur n'a pas de coups possibles 
-            aucun_coup_autre_joueur = not self.coups_possibles()é
+            aucun_coup_autre_joueur = not self.coups_possibles()
             # Rechanger de joueur pour revenir au joueur initial
             self.changer_joueur()
             return aucun_coup_autre_joueur # retour du booleen determinant
