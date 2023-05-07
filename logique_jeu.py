@@ -1,113 +1,106 @@
+from copy import deepcopy
 from grille import Grille
 
 class LogiqueJeu:
     def __init__(self):
         self.grille = Grille()
         self.joueur_courant = 'N'
-
-    def coup_valide(self, lig, col):
-        # Vérifier si la case est vide
-        if self.grille.est_case_vide(lig, col):
-            # Nord, Sud, Est, Ouest, Nord-Est, Nord-Ouest, Sud-Est, Sud-Ouest
-            directions = [
-                (-1, -1), (-1, 0), (-1, 1),
-                (0, -1),           (0, 1),
-                (1, -1), (1, 0), (1, 1)
-            ]
-    
-            for dx, dy in directions:
-                x, y = lig + dx, col + dy
-                pions_adverses = []
-    
-                # Parcourir la direction jusqu'a trouver un pion de la meme couleur
-                while 0 <= x < 8 and 0 <= y < 8:
-                    couleur = self.grille.couleur_pion(x, y)
-    
-                    if couleur == self.joueur_courant:
-                        break
-                    elif couleur == ' ':
-                        pions_adverses = []
-                        break
-                    else:
-                        pions_adverses.append((x, y))
-    
-                    x += dx
-                    y += dy
-    
-                # Si on a trouve des pions adverses entre les pions de la meme couleur, le coup est valide
-                if pions_adverses:
-                    return True
-    
-        return False
-        
-            
-
-    def retournement_pions(self, lig, col):
-        # Liste pour stocker les pions a retourner
-        pions_a_retourner = []
-    
-        # Nord, Sud, Est, Ouest, Nord-Est, Nord-Ouest, Sud-Est, Sud-Ouest
-        directions = [
+        self.directions = [
             (-1, -1), (-1, 0), (-1, 1),
             (0, -1),           (0, 1),
             (1, -1), (1, 0), (1, 1)
         ]
+
+    def coup_valide(self, lig, col):
+        # Vérifier si la case est vide
+        if not self.grille.est_case_vide(lig, col) or not self.grille.est_dans_grille(lig, col):
+            return False
+        
+        
+        # Vérifier si un coup est valide dans l'une des directions
+        for dx, dy in self.directions:
+            if self.pions_adverses(lig, col, dx, dy):
+                return True
+        
+        return False
     
-        for dx, dy in directions:
-            x, y = lig + dx, col + dy
-            pions_adverses = []
-    
-            # Parcourir la direction jusqu'à trouver un pion de la même couleur
-            while 0 <= x < 8 and 0 <= y < 8:
-                couleur = self.grille.couleur_pion(x, y)
-    
-                if couleur == self.joueur_courant:
-                    pions_a_retourner.extend(pions_adverses)
-                    break
-                elif couleur == ' ':
-                    pions_adverses = []
-                    break
-                else:
-                    pions_adverses.append((x, y))
-    
-                x += dx
-                y += dy
-    
-        # Retourner les pions capturés
+    def result(self, lig, col):
+        new_game_state = deepcopy(self)
+        new_game_state.jouer_coup(lig, col)
+        new_game_state.changer_joueur()
+        return new_game_state
+
+    def retournement_pions(self, lig, col):
+        pions_a_retourner = []
+        
+        # Trouver les pions à retourner dans toutes les directions
+        for dx, dy in self.directions:
+            pions_a_retourner.extend(self.pions_adverses(lig, col, dx, dy))
+        
+        # Retourner les pions trouvés
         for pion in pions_a_retourner:
             self.grille.retourner_pion(*pion)
+
+    def pions_adverses(self, lig, col, dx, dy):
+        pions_adverses = []
+        x, y = lig + dx, col + dy
+
+        # Parcourir la direction donnée et collecter les pions adverses
+        while 0 <= x < 8 and 0 <= y < 8:
+            couleur = self.grille.couleur_pion(x, y)
+
+            if couleur == self.joueur_courant:
+                return pions_adverses
+            elif couleur == ' ':
+                break
+            else:
+                pions_adverses.append((x, y))
+
+            x += dx
+            y += dy
+
+        return []
     
+
     def coups_possibles(self):
-        # Initialisation d'une liste vide de coups possibles
         coups_possibles = []
-        # Parcours de la grille
-        for i in range(len(self.grille.plateau)):
-            for j in range(len(self.grille.plateau)): 
-                if self.coup_valide(i, j): # Verification du coup valide
+        
+        # Parcourir la grille et ajouter les coups valides à la liste des coups possibles
+        for i in range(8):
+            for j in range(8):
+                if self.coup_valide(i, j):
                     coups_possibles.append((i, j))
-        return coups_possibles # Retourner les tuples possibles
-                
+        print(coups_possibles)
+        return coups_possibles
 
     def changer_joueur(self):
         self.joueur_courant = 'B' if self.joueur_courant == 'N' else 'N'
 
     def partie_terminee(self):
-        # Verifier si le joueur courant n'a pas de coups possibles
-        if not self.coups_possibles():
-            # Changer de joueur 
-            self.changer_joueur()
-            # Verifier si l'autre joueur n'a pas de coups possibles 
-            aucun_coup_autre_joueur = not self.coups_possibles()
-            # Rechanger de joueur pour revenir au joueur initial
-            self.changer_joueur()
-            return aucun_coup_autre_joueur # retour du booleen determinant
-                                           # si l'adversaire a un coup possible ou non
-        return False # si le joueur courant a un coup possible la partie n'est pas finie
+        coups_possibles_joueur_courant = self.coups_possibles()
+        
+        # Si le joueur courant a des coups possibles, la partie n'est pas terminée
+        if coups_possibles_joueur_courant:
+            return False
+        
+        # Vérifier si l'autre joueur a des coups possibles
+        self.changer_joueur()
+        coups_possibles_autre_joueur = self.coups_possibles()
+        self.changer_joueur()
 
+        return not coups_possibles_autre_joueur
+    
+    def calculer_resultat(self):
+        nb_pions_blancs = sum([ligne.count('B') for ligne in self.grille.plateau])
+        nb_pions_noirs = sum([ligne.count('N') for ligne in self.grille.plateau])
+        return nb_pions_blancs - nb_pions_noirs
+    
     def jouer_coup(self, lig, col):
+        # Si le coup est valide, place un pion, retourne les pions adverses et change de joueur
         if self.coup_valide(lig, col):
             self.grille.placer_pion(lig, col, self.joueur_courant)
             self.retournement_pions(lig, col)
-            self.joueur_suivant()
+            self.changer_joueur()
             return True
+        # Si le coup n'est pas valide, ne fait rien et renvoie False
         return False

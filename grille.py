@@ -22,6 +22,9 @@ class Grille:
             return True
         return False
     
+    def est_dans_grille(self, lig, col):
+        return 0 <= lig < 8 and 0 <= col < 8
+    
     def retourner_pion(self, lig, col):
         # Retourne le pion a la position specifiee
         if self.plateau[lig][col] == 'B':
