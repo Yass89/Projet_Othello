@@ -33,7 +33,6 @@ if __name__ == "__main__":
         if joueur_commence:
             if jeu.joueur_courant == 'N':
                 while True:
-                    try:
                         print("C'est à vous de jouer (Noir). Entrez les coordonnées (ligne, colonne) :")
                         lig, col = map(int, input().split())
                         lig -= 1
@@ -42,8 +41,6 @@ if __name__ == "__main__":
                             break
                         else:
                             print("Coup invalide, veuillez réessayer.")
-                    except ValueError:
-                        print("Erreur : Veuillez entrer deux coordonnées séparées par un espace.")
                 jeu.jouer_coup(lig, col)
             else:
                 print("C'est au tour de l'IA (Blanc).")
@@ -51,7 +48,6 @@ if __name__ == "__main__":
         else:
             if jeu.joueur_courant == 'B':
                 while True:
-                    try:
                         print("C'est à vous de jouer (Blanc). Entrez les coordonnées (ligne, colonne) :")
                         lig, col = map(int, input().split())
                         lig -= 1
@@ -60,8 +56,6 @@ if __name__ == "__main__":
                             break
                         else:
                             print("Coup invalide, veuillez réessayer.")
-                    except ValueError:
-                        print("Erreur : Veuillez entrer deux coordonnées séparées par un espace.")
                 jeu.jouer_coup(lig, col)
             else:
                 print("C'est au tour de l'IA (Noir).")

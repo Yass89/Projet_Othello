@@ -13,7 +13,7 @@ class LogiqueJeu:
 
     def coup_valide(self, lig, col):
         # Vérifier si la case est vide
-        if not self.grille.est_case_vide(lig, col) or not self.grille.est_dans_grille(lig, col):
+        if not self.grille.est_dans_grille(lig, col) or not self.grille.est_case_vide(lig, col):
             return False
         
         
@@ -96,11 +96,26 @@ class LogiqueJeu:
         return nb_pions_blancs - nb_pions_noirs
     
     def jouer_coup(self, lig, col):
-        # Si le coup est valide, place un pion, retourne les pions adverses et change de joueur
-        if self.coup_valide(lig, col):
+            # Si le coup n'est pas valide et qu'il reste des coups possibles pour l'autre joueur, passe son tour
+            if not self.coups_possibles():
+                print("le tour est passé car aucun coup légal n'est disponible")
+                self.changer_joueur()
+                return False
+            # Si le coup est valide, Placer un pion, retourner les pions adverses et changer de joueur
             self.grille.placer_pion(lig, col, self.joueur_courant)
             self.retournement_pions(lig, col)
             self.changer_joueur()
             return True
-        # Si le coup n'est pas valide, ne fait rien et renvoie False
-        return False
+    
+    def jouer_coup_ia(self, coup):
+         # Si le coup est valide, Placer un pion, retourner les pions adverses et changer de joueur
+        if coup is not None:
+            lig, col = coup
+            self.grille.placer_pion(lig, col, self.joueur_courant)
+            self.retournement_pions(lig, col)
+            self.changer_joueur()
+            return True
+        else: # sinon on passe le tour 
+            print("Le tour est passé car aucun coup légal n'est disponible")
+            self.changer_joueur()
+            return False
