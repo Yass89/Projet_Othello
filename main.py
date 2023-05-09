@@ -57,7 +57,7 @@ def choisir_difficulte():
         if choix == 1:
             return 1
         elif choix == 2:
-            return 5
+            return 4
         else:
             return 7
     except ValueError:

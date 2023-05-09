@@ -4,6 +4,13 @@ class IA:
         """Initialiser la classe IA avec une couleur et une profondeur de recherche donnee"""
         self.couleur = couleur
         self.profondeur = profondeur
+        # Definition des poids pour chaque position du plateau afin de ne pas creer le tableau a chaque iteration d'evaluer
+        self.poids_positions = [
+            [90, -60, 15, 10],
+            [-60, -80, -5, -5],
+            [15, -5, 5, 3],
+            [10, -5, 3, 1]
+        ]
         
     def couleur_opposee(self):
         """Retourne la couleur opposee"""
@@ -74,24 +81,18 @@ class IA:
 
     def evaluer(self, jeu):
         """ Evalue la position actuelle du jeu pour l'IA """
-        # Definition des poids pour chaque position du plateau
-        poids_positions = [
-            [50, -1, 11,  8],
-            [-1, -7, -4,  1],
-            [11, -4,  2,  2],
-            [ 8,  1,  2, -3]
-        ]
     
         # Calcul de la valeur des positions des pions
         valeur_positions = 0
+                    
         for i in range(8):
             for j in range(8):
                 # Calcul du poids pour la position (i,j)
-                poids = poids_positions[min(i, 7 - i)][min(j, 7 - j)]
-                # Si la case (i,j) est occupee par l'IA, ajouter le poids a la valeur des positions
+                poids = self.poids_positions[min(i, 7 - i)][min(j, 7 - j)]
+                # Si la case (i,j) est occupée par l'IA, ajouter le poids a la valeur des positions
                 if jeu.grille.plateau[i][j] == self.couleur:
                     valeur_positions += poids
-                # Si la case (i,j) est occupee par l'adversaire, soustraire le poids de la valeur des positions
+                # Si la case (i,j) est occupée par l'adversaire, soustraire le poids de la valeur des positions
                 elif jeu.grille.plateau[i][j] != ' ':
                     valeur_positions -= poids
     
@@ -114,7 +115,7 @@ class IA:
         parite = (nb_pions_blancs + nb_pions_noirs) % 2
     
         # Combinaison des facteurs pour obtenir la valeur heuristique finale selon des criteres que l'on a juge pertinent
-        valeur_heuristique = 2 * valeur_positions + 30 * mobilite + 15  * stabilite + parite + difference_pions
+        valeur_heuristique = 2 * valeur_positions + 15* mobilite + 15  * stabilite + parite + difference_pions 
     
         return valeur_heuristique
     
@@ -129,10 +130,10 @@ class IA:
             i, j = coin
             if jeu.grille.plateau[i][j] == self.couleur:
                 # Si le coin est occupe par l'IA, ajouter 30 a la stabilite
-                stabilite += 60
+                stabilite += 30
             elif jeu.grille.plateau[i][j] != ' ':
                 # Si le coin est occupe par l'adversaire, soustraire 30 a la stabilite
-                stabilite -= 60
+                stabilite -= 30
     
         # Les bords sont consideres comme stables s'ils sont adjacents a des pions stables
         for i in range(8):
