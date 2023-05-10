@@ -11,10 +11,21 @@ class IA:
             [15, -5, 5, 3],
             [10, -5, 3, 1]
         ]
+        self.coins = [(0,0), (0,7), (7,0), (7,7)] # ajout des coins pour optimiser a l'initialisation pour eviter de les recreer a chaque iteration
+        self.bords = [(0,i) for i in range(8)] + [(7,i) for i in range(8)] + [(i,0) for i in range(8)] + [(i,7) for i in range(8)] # de meme pour les bords
         
     def couleur_opposee(self):
         """Retourne la couleur opposee"""
         return 'B' if self.couleur == 'N' else 'N'
+    
+    def trier_coups(self,jeu,coups_possibles):
+        """Trie les coups possibles en fonction de leur importance"""
+        coups_tries = sorted(coups_possibles, key=lambda coup: coup in self.coins, reverse=True)  # Priorise les coins
+        coups_tries = sorted(coups_tries, key=lambda coup: coup in self.bords, reverse=True)  # Puis les bords
+        # Ensuite, ordonner par le nombre de pions retournés par chaque coup
+        coups_tries = sorted(coups_tries, key=lambda coup: len(jeu.simuler_coup(*coup)), reverse=True)
+    
+        return coups_tries
 
     def jouer_coup(self, jeu):
         """ Joue un coup pour l'IA en utilisant l'algorithme alpha-beta """
@@ -54,8 +65,8 @@ class IA:
             jeu.changer_joueur()
             return value, None
         
-        # Parcourir tous les coups possibles
-        for coup in coups_possibles:
+        # Parcourir tous les coups possibles en commencant par les plus probables d'etre les meilleurs
+        for coup in self.trier_coups(jeu,coups_possibles):
             # Obtenir l'etat du jeu apres avoir joue ce coup
             new_game_state = jeu.result(*coup)
             # Calculer la valeur pour cet etat de jeu en appelant recursivement alpha_beta()
@@ -115,7 +126,7 @@ class IA:
         parite = (nb_pions_blancs + nb_pions_noirs) % 2
     
         # Combinaison des facteurs pour obtenir la valeur heuristique finale selon des criteres que l'on a juge pertinent
-        valeur_heuristique = 2 * valeur_positions + 15* mobilite + 15  * stabilite + parite + difference_pions 
+        valeur_heuristique = 3 * valeur_positions + 10* mobilite + 30 * stabilite + parite + 2 * difference_pions 
     
         return valeur_heuristique
     
@@ -123,10 +134,7 @@ class IA:
         """ Calcule la stabilite des pions pour l'IA """
         stabilite = 0
     
-        # Les coins sont toujours stables
-        coins = [(0, 0), (0, 7), (7, 0), (7, 7)]
-    
-        for coin in coins:
+        for coin in self.coins: # Les coins sont toujours stables
             i, j = coin
             if jeu.grille.plateau[i][j] == self.couleur:
                 # Si le coin est occupe par l'IA, ajouter 30 a la stabilite
@@ -140,7 +148,7 @@ class IA:
             for j in range(8):
                 if i == 0 or i == 7 or j == 0 or j == 7:
                     if jeu.grille.plateau[i][j] == self.couleur:
-                        # Si le bord est occupe par l'IA et qu'il est adjacent a des pions stables, ajouter 5 a la stabilite
+                        # Si le bord est occupe par l'IA et qu'il est adjacent a des pions stables, ajouter 15 a la stabilite
                         stable = True
                         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                             x, y = i + dx, j + dy
@@ -148,9 +156,9 @@ class IA:
                                 stable = False
                                 break
                         if stable:
-                            stabilite += 5
+                            stabilite += 15
                     elif jeu.grille.plateau[i][j] != ' ':
-                        # Si le bord est occupe par l'adversaire et qu'il est adjacent a des pions stables, soustraire 5 a la stabilite
+                        # Si le bord est occupe par l'adversaire et qu'il est adjacent a des pions stables, soustraire 15 a la stabilite
                         stable = True
                         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                             x, y = i + dx, j + dy
@@ -158,6 +166,6 @@ class IA:
                                 stable = False
                                 break
                         if stable:
-                            stabilite -= 5
+                            stabilite -= 15
     
         return stabilite

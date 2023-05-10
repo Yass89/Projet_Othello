@@ -12,6 +12,24 @@ class LogiqueJeu:
             (1, -1), (1, 0), (1, 1) # Directions diagonales
         ]
 
+    def simuler_coup(self, lig, col):
+        """Simuler un coup à la position spécifiée et retourner les pions qui seraient retournés"""
+        # Créer une copie de l'état actuel du jeu
+        etat_simule = deepcopy(self)
+        
+        # Jouer le coup sur la copie de l'état du jeu
+        etat_simule.jouer_coup(lig, col)
+        
+        # Obtenir les pions qui ont été retournés
+        pions_a_retourner = []
+    
+        # Trouver les pions à retourner dans toutes les directions
+        for dx, dy in self.directions:
+            pions_a_retourner.extend(etat_simule.pions_adverses(lig, col, dx, dy))
+    
+        # Retourner la liste des pions qui seraient retournés
+        return pions_a_retourner
+    
     def coup_valide(self, lig, col):
         """Verifie si un coup est valide a la position specifiee"""
         # Verifier si la case est vide ou si elle n'est pas dans la grille
@@ -109,4 +127,3 @@ class LogiqueJeu:
         self.grille.placer_pion(lig, col, self.joueur_courant)
         self.retournement_pions(lig, col)
         self.changer_joueur()
-        return True

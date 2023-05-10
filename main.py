@@ -57,9 +57,9 @@ def choisir_difficulte():
         if choix == 1:
             return 1
         elif choix == 2:
-            return 4
+            return 3
         else:
-            return 7
+            return 6
     except ValueError:
         # Redemande une saisie si une exception ValueError est levee
         print("Veuillez choisir une difficulté valide (1, 2, 3):")
