@@ -35,17 +35,14 @@ class IA:
         return sorted(coups_possibles, key=score_coup, reverse=True)
 
     def jouer_coup(self, jeu):
-        """Détermine et joue le meilleur coup pour l'IA."""
-        start_time = time.time()
+        """Détermine et joue le meilleur coup pour l'IA, sans rien imprimer."""
         # L'algorithme retourne (score, meilleur_coup)
         _, meilleur_coup = self.alpha_beta(jeu, self.profondeur, float('-inf'), float('inf'), True)
-        end_time = time.time()
         
         if meilleur_coup:
-            ligne, colonne = meilleur_coup
-            print(f"L'IA ({self.couleur}) joue en : ({ligne + 1}, {colonne + 1})")
-            print(f"Temps de calcul de l'IA : {end_time - start_time:.3f} secondes")
-            jeu.jouer_coup(ligne, colonne)
+            # Joue le coup sur l'état du jeu passé en argument
+            jeu.jouer_coup(meilleur_coup[0], meilleur_coup[1])
+        # Si aucun coup n'est possible, la logique principale passera le tour.
 
     def alpha_beta(self, jeu, profondeur, alpha, beta, est_joueur_maximisant):
         """Implémentation de l'algorithme Minimax avec élagage Alpha-Bêta."""
