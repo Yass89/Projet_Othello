@@ -4,7 +4,8 @@ Bienvenue dans ce projet Othello ! Il s'agit d'une implémentation complète du 
 
 Le cœur de ce projet est une IA basée sur l'algorithme **Minimax avec élagage Alpha-Bêta**, ce qui lui permet de prendre des décisions stratégiques en explorant les possibilités de jeu à plusieurs coups d'avance.
 
-    ![1750955536705](image/README/1750955536705.png)
+![image](https://github.com/user-attachments/assets/48508f19-2057-42d1-acab-76b36b0070d2)
+
 
 ---
 
