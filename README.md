@@ -42,7 +42,6 @@ Et c'est parti ! 😃
 * **IA Stratégique** : Affrontez une IA qui utilise l'algorithme Minimax Alpha-Bêta.
 * **Difficulté Réglable** : Choisissez entre les niveaux Facile, Moyen et Difficile pour ajuster la profondeur de recherche de l'IA.
 * **Mise en Évidence des Coups** : Les coups possibles sont affichés visuellement pour vous aider à jouer.
-* **Packaging Professionnel** : Le jeu est distribué en tant qu'application autonome grâce à PyInstaller.
 
 ---
 
