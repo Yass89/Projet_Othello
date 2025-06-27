@@ -31,7 +31,9 @@ Si vous souhaitez explorer le code ou y contribuer, vous pouvez le lancer locale
    ```bash
    python main.py
    ```
+
 Et c'est parti ! 😃
+
 ---
 
 ## 🚀 Fonctionnalités
