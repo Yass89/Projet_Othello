@@ -1,10 +1,11 @@
 # 🔵 Othello IA ⚪
 
-Bienvenue dans ce projet Othello ! Il s'agit d'une implémentation complète du jeu de plateau classique Othello, dotée d'une intelligence artificielle redoutable et d'une interface graphique simple et efficace.
+Bienvenue dans ce projet Othello ! Il s'agit d'une implémentation complète du jeu de plateau classique Othello, dotée d'une intelligence artificielle et d'une interface graphique simple.
 
 Le cœur de ce projet est une IA basée sur l'algorithme **Minimax avec élagage Alpha-Bêta**, ce qui lui permet de prendre des décisions stratégiques en explorant les possibilités de jeu à plusieurs coups d'avance.
 
-![image](https://github.com/user-attachments/assets/48508f19-2057-42d1-acab-76b36b0070d2)
+![othello_demo](https://github.com/user-attachments/assets/dfb10eb6-dcfc-41be-9f1c-cae72b9a0510)
+
 
 ## 🎮 Jouer Maintenant (Aucune installation requise !)
 
