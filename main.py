@@ -11,6 +11,8 @@ def main():
     try:
         # Create the main window
         root = tk.Tk()
+        # Set custom window icon
+        root.iconbitmap("assets/othello_icon.ico")
         # Initialize the UI class
         OthelloUI(root)
         # Start the Tkinter event loop
