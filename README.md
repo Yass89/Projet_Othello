@@ -1,55 +1,57 @@
-# 🔵 Othello IA ⚪
+# 🔵 Othello AI ⚪
 
-Bienvenue dans ce projet Othello ! Il s'agit d'une implémentation complète du jeu de plateau classique Othello, dotée d'une intelligence artificielle et d'une interface graphique simple.
+Welcome to this Othello project!  
+This is a complete implementation of the classic Othello board game, featuring an artificial intelligence opponent and a simple graphical interface.
 
-Le cœur de ce projet est une IA basée sur l'algorithme **Minimax avec élagage Alpha-Bêta**, ce qui lui permet de prendre des décisions stratégiques en explorant les possibilités de jeu à plusieurs coups d'avance.
+At the heart of this project is an AI based on the **Minimax algorithm with Alpha-Beta pruning**, enabling it to make strategic decisions by exploring game possibilities several moves ahead.
 
 ![othello_demo](https://github.com/user-attachments/assets/dfb10eb6-dcfc-41be-9f1c-cae72b9a0510)
 
+---
 
-## 🎮 Jouer Maintenant (Aucune installation requise !)
+## 🎮 Play Now (No Installation Required!)
 
-Le moyen le plus simple de jouer est de télécharger la dernière version du jeu.
+The easiest way to play is to download the latest version of the game.
 
-**[➡️ Accéder à la dernière version sur la page des Releases ⬅️](https://github.com/Yass89/Projet_Othello/releases/latest)**
+**[➡️ Go to the latest release ⬅️](https://github.com/Yass89/Projet_Othello/releases/latest)**
 
-1. Sur la page des releases, téléchargez le fichier `.zip`.
-2. Décompressez le fichier.
-3. Double-cliquez sur l'exécutable `Othello` pour lancer le jeu. Profitez ! 😊
+1. On the releases page, download the `.zip` file.
+2. Extract the archive.
+3. Double-click the `Othello` executable to launch the game. Enjoy! 😊
 
 ---
 
-## 👨‍💻 Pour les développeurs (Lancer depuis le code source)
+## 👨‍💻 For Developers (Run from Source)
 
-Si vous souhaitez explorer le code ou y contribuer, vous pouvez le lancer localement :
+If you want to explore the code or contribute, you can run it locally:
 
-1. **Clonez le dépôt** :
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/Yass89/Projet_Othello.git
    ```
-2. **Exécutez le point d'entrée principal** :
+2. **Run the main entry point:**
    ```bash
    python main.py
    ```
 
-Et c'est parti ! 😃
+And you're good to go! 😃
 
 ---
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-* **Interface Graphique Intuitive** : Une interface simple et claire construite avec Tkinter pour jouer facilement.
-* **IA Stratégique** : Affrontez une IA qui utilise l'algorithme Minimax Alpha-Bêta.
-* **Difficulté Réglable** : Choisissez entre les niveaux Facile, Moyen et Difficile pour ajuster la profondeur de recherche de l'IA.
-* **Mise en Évidence des Coups** : Les coups possibles sont affichés visuellement pour vous aider à jouer.
-
----
-
-## 🛠️ Technologies utilisées
-
-* **Langage** : Python 3
-* **Interface Graphique** : Tkinter
+* **Intuitive Graphical Interface**: A clear and simple interface built with Tkinter for easy gameplay.
+* **Strategic AI**: Play against an AI that uses the Minimax algorithm with Alpha-Beta pruning.
+* **Adjustable Difficulty**: Choose between Easy, Medium, and Hard levels to set the AI’s search depth.
+* **Highlighted Moves**: Possible moves are visually displayed to help you play.
 
 ---
 
-*Si vous trouvez des bugs, avez des idées d'amélioration ou voulez simplement explorer le code, n'hésitez pas ! Toutes les contributions sont les bienvenues 😊*
+## 🛠️ Technologies Used
+
+* **Language**: Python 3
+* **Graphical Interface**: Tkinter
+
+---
+
+*If you find any bugs, have improvement ideas, or just want to explore the code, feel free! Contributions are welcome 😊*
