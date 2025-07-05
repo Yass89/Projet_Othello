@@ -5,7 +5,8 @@ This is a complete implementation of the classic Othello board game, featuring a
 
 At the heart of this project is an AI based on the **Minimax algorithm with Alpha-Beta pruning**, enabling it to make strategic decisions by exploring game possibilities several moves ahead.
 
-![othello_demo](https://github.com/user-attachments/assets/dfb10eb6-dcfc-41be-9f1c-cae72b9a0510)
+![othello_demo](https://github.com/user-attachments/assets/3611eb5b-0dae-43d7-8866-91cb0379ffbf)
+
 
 ---
 
