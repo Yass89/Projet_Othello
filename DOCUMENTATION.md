@@ -9,6 +9,7 @@ It is intended for developers who wish to understand, modify, or contribute to t
 
 ```
 .
+├── assets/            # Contains static resources such as images, icons, sound files, fonts... used by the UI or game
 ├── ai.py              # AI logic: Minimax + Alpha-Beta pruning
 ├── board.py           # Board representation & manipulation
 ├── game_logic.py      # Game rules & move validation
